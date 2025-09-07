@@ -1,5 +1,5 @@
 import os
-import requests
+# import requests
 import json
 
 def delete_old_data_file(filename='download.json'):
@@ -7,11 +7,18 @@ def delete_old_data_file(filename='download.json'):
         os.remove(filename)
 
 def download_data(server_id):
-    url = f'https://nwmarketprices.com/api/latest-prices/{server_id}/'
-    response = requests.get(url)
-    response.raise_for_status()  # Check for a valid response
-    data = response.json()
-    return data
+    """
+    Offline stub: load local 'download.json' or return empty dict.
+    """
+    filename = 'download.json'
+    if os.path.exists(filename):
+        try:
+            with open(filename, 'r') as f:
+                return json.load(f)
+        except Exception:
+            pass
+    # no local file; return empty dict
+    return {}
 
 def save_data_to_file(data, filename='download.json'):
     delete_old_data_file(filename)  
